@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 
-
 # Create your models here.
 class Category(models.Model):
     name_category = models.CharField(max_length=50, verbose_name='категория')
@@ -10,7 +9,7 @@ class Category(models.Model):
 
     def __str__(self):
         # Строковое отображение объекта
-        return f'{self.id}) {self.name_category}'
+        return f'Категория: {self.name_category}'
 
     class Meta:
         verbose_name = 'категория' # Настройка для наименования одного объекта
@@ -27,10 +26,13 @@ class Product(models.Model):
     datetime_changes = models.DateTimeField(auto_now=True, verbose_name="дата последнего изменения",
                                             blank=True)
 
+    def get_url(self):
+
+        return
 
     def __str__(self):
         # Строковое отображение объекта
-        return f'{self.id} {self.name_product} - {self.category}'
+        return f'{self.id}) {self.name_product} - {self.category}'
 
     class Meta:
 
