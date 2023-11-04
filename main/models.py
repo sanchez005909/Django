@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
+from pytils.translit import slugify
 
 
 # Create your models here.
@@ -18,8 +20,9 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name_product = models.CharField(max_length=50, verbose_name='название', null=True)
+    title = models.CharField(max_length=50, verbose_name='название', null=True)
     description = models.TextField(verbose_name='описание', null=True, blank=True)
+    slug = models.SlugField(null=False, unique=True, blank=True)
     image = models.ImageField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='категория', null=True)
     price = models.IntegerField(verbose_name='Цена', null=True)
@@ -27,13 +30,17 @@ class Product(models.Model):
     datetime_changes = models.DateTimeField(auto_now=True, verbose_name="дата последнего изменения",
                                             blank=True)
 
-    def get_url(self):
+    def get_absolute_url(self):
+        return reverse('article_detail', kwargs={'slug': self.slug})
 
-        return
+    def save(self, *args, **kwargs): # new
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         # Строковое отображение объекта
-        return f'{self.id}) {self.name_product} - {self.category}'
+        return f'{self.id}) {self.title} - {self.category}'
 
     class Meta:
 

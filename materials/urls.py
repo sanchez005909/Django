@@ -14,4 +14,4 @@ urlpatterns = [
     path('view/<int:pk>/', MaterialDetailView.as_view(), name='material_detail'),
     path('update/<int:pk>/', MaterialUpdateView.as_view(), name='update'),
     path('delete/<int:pk>/', MaterialDeleteView.as_view(), name='delete'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)

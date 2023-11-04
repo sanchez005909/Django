@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 
 {% block content%}
-
+<a class="btn btn-info mb-3" href="product_create" role="button">Добавить новый продукт</a>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
@@ -11,7 +11,7 @@
 
 
           <div class="card shadow-sm">
-              <img src= {{ object.image.url }} class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"></rect></img>
+              <img src= {{ object.image }} class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"></rect></img>
 
             <div class="card-body">
               <p class="card-text">{{ object|title }}</p>
@@ -22,6 +22,8 @@
 
               </div>
                 <a class="btn btn-info" href="{% url 'main:product_detail' object.pk %}" role="button">Link</a>
+                <a class="btn btn-warning" href="{% url 'main:product_update' object.pk %}" role="button">Изменить</a>
+                <a class="btn btn-danger" href="{% url 'main:product_delete' object.pk %}" role="button">Удалить</a>
             </div>
 
           </div>
