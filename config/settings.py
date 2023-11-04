@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'main'
+    'main',
+    'materials',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'goods', # Название БД
         'USER': 'postgres', # Пользователь для подключения
-        'PASSWORD': '', # Пароль для этого пользователя
+        'PASSWORD': '12345678', # Пароль для этого пользователя
         'HOST': '127.0.0.1', # Адрес, на котором развернут сервер БД
         'PORT': 5432, # Порт, на котором работает сервер БД
     }
@@ -133,5 +134,5 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
