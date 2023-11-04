@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+
+{% block content%}
+<a class="btn btn-info mb-3" href="create" role="button">Создать новую статью</a>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+    {% for object in object_list %}
+        {% if object.is_published%}
+            <div class="col">
+              <div class="card shadow-sm">
+                  <img src="/media/{{ object.image }}" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"></rect></img>
+
+                <div class="card-body">
+                  <p class="card-text">{{ object|title }}</p>
+                    <h1>{{object.slug}}</h1>
+                  <div class="d-flex justify-content-between align-items-center">
+
+                    <small class="text-body-secondary">{{ object.datetime_create }}</small>
+
+                  </div>
+                    <a class="btn btn-info" href="{% url 'materials:material_detail' object.pk %}" role="button">Подробнее</a>
+                    <a class="btn btn-warning" href="{% url 'materials:update' object.pk %}" role="button">Изменить</a>
+                    <a class="btn btn-danger" href="{% url 'materials:delete' object.pk %}" role="button">Удалить</a>
+                </div>
+
+              </div>
+            </div>
+
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}

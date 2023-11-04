@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 # Create your models here.
 class Category(models.Model):
     name_category = models.CharField(max_length=50, verbose_name='категория')
