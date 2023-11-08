@@ -23,7 +23,7 @@
                 <small class="text-body-secondary">{{ object.datetime_create }}</small>
 
               </div>
-                <a class="btn btn-info" href="{% url 'main:product_detail' object.pk %}" role="button">Link</a>
+                <a class="btn btn-info" href="{% url 'main:product_detail' object.pk %}" role="button">Подробнее</a>
                 <a class="btn btn-warning" href="{% url 'main:product_update' object.pk %}" role="button">Изменить</a>
                 <a class="btn btn-danger" href="{% url 'main:product_delete' object.pk %}" role="button">Удалить</a>
             </div>
