@@ -2,18 +2,15 @@
 
 {% block content%}
 <h2 class="row" mb-3>
-    <li><a href="/" class="text-white">Главная</a></li>
+    <li><a href="/" class="text-black">На главную</a></li>
 </h2>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-
     <div class="col">
 
-
-
           <div class="card shadow-sm">
-              <img src= {{ object.image.url }} class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"></rect></img>
+              <img src={{ object.image.url }} class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"></rect></img>
 
             <div class="card-body">
               <p class="card-text">{{ object|title }}</p>

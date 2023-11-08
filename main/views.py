@@ -5,6 +5,10 @@ from main.models import Product, Category
 
 
 # Create your views here.
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'main/index.html'
+
 
 class ProductListView(ListView):
     model = Product
