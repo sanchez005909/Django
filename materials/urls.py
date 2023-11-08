@@ -4,7 +4,7 @@ from django.urls import path
 
 from materials.apps import MaterialsConfig
 from materials.views import MaterialCreateView, MaterialListView, MaterialDetailView, MaterialUpdateView, \
-    MaterialDeleteView
+    MaterialDeleteView, toggle_published
 
 app_name = MaterialsConfig.name
 
@@ -14,4 +14,5 @@ urlpatterns = [
     path('view/<int:pk>/', MaterialDetailView.as_view(), name='material_detail'),
     path('update/<int:pk>/', MaterialUpdateView.as_view(), name='update'),
     path('delete/<int:pk>/', MaterialDeleteView.as_view(), name='delete'),
+    path('published/<int:pk>/', toggle_published, name='toggle_published')
 ] + static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)
