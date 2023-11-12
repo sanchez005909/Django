@@ -1,15 +1,16 @@
 {% extends 'main/base.html' %}
 
 {% block content%}
-    <div class="col-12 ">
-        <div class="row">
+    <div class="col-12 m-3">
+        <form class="row" method="post" enctype="multipart/form-data">
             <div class="col-6">
                 <div class="card">
-                    <div class="body">
-                        <form class="form-control" method="post" enctype="multipart/form-data">
+                    <div class="card-header">
+                        <h3> Добавление продукта </h3>
+                    </div>
+                    <div class="body m-3">
                             {% csrf_token %}
                             {{ form.as_p }}
-                            <form class="form-control" method="post" enctype="multipart/form-data">
                             <button  type="submit" class="btn btn-success m-3">
                                 {% if object %}
                                     Сохранить
@@ -17,10 +18,29 @@
                                     Создать
                                 {% endif %}
                             </button>
-                        </form>
+                    <div class="card-footer"></div>
                     </div>
                 </div>
             </div>
-        </div>
+            {% if object %}
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3> Версии </h3>
+                        </div>
+                        <div class="body m-3">
+                            {{ formset.management_form }}
+                            {% for form in formset.forms %}
+                                {{ form.as_p }}
+                                {% if not forloop.last %}
+                                    <hr>
+                                {% endif %}
+                            {% endfor %}
+                        <div class="card-footer"></div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </form>
     </div>
 {% endblock %}
