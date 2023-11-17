@@ -1,5 +1,6 @@
 from django import forms
-from main.models import Product, Version
+from main.models import Product, Version, Category
+
 
 class StyleFormMixin:
     def __init__(self, *args, **qwargs):
@@ -8,7 +9,7 @@ class StyleFormMixin:
             field.widget.attrs['class'] = 'form-control'
 
 
-class ProductForm(StyleFormMixin,forms.ModelForm):
+class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
         exclude = ('datetime_create',)
@@ -31,3 +32,8 @@ class VersionForm(StyleFormMixin, forms.ModelForm):
                   'name_version')
 
 
+class CategoryForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name_category',
+                  'description')

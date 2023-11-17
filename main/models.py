@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
@@ -25,11 +26,13 @@ class Product(models.Model):
     description = models.TextField(verbose_name='описание', **NULLABLE)
     # slug = models.SlugField(null=False, unique=True, blank=True)
     image = models.ImageField(default="")
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='категория', null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='категория', null=True)
     price = models.IntegerField(verbose_name='Цена', null=True)
     datetime_create = models.DateTimeField(default=timezone.now, verbose_name='дата создания', blank=True)
     datetime_changes = models.DateTimeField(auto_now=True, verbose_name="дата последнего изменения",
                                             blank=True)
+    user_prod = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
+                              verbose_name='Пользователь')
 
     def __str__(self):
         # Строковое отображение объекта
