@@ -1,8 +1,10 @@
 {% extends 'main/base.html' %}
 
 {% block content%}
-<a class="btn btn-info mb-3" href="product_create" role="button">Добавить новый продукт</a>
-<a class="btn btn-info mb-3" href="category_create" role="button">Создать новую категорию</a>
+{% if request.user.is_authenticated %}
+    <a class="btn btn-info mb-3" href="product_create" role="button">Добавить новый продукт</a>
+{% endif %}
+<a class="btn btn-info mb-3" href="category_list" role="button">Категории</a>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
     {% for object in object_list %}
@@ -16,6 +18,7 @@
 
             <div class="card-body">
               <p class="card-text">{{ object|title }}</p>
+              <p class="card-text">{{ object.user_prod }}</p>
                     <p>{{ object.description|slice:100 }}</p>
 
               <div class="d-flex justify-content-between align-items-center">
@@ -24,8 +27,10 @@
 
               </div>
                 <a class="btn btn-info" href="{% url 'main:product_detail' object.pk %}" role="button">Подробнее</a>
-                <a class="btn btn-warning" href="{% url 'main:product_update' object.pk %}" role="button">Изменить</a>
-                <a class="btn btn-danger" href="{% url 'main:product_delete' object.pk %}" role="button">Удалить</a>
+                {% if request.user.is_authenticated %}
+                    <a class="btn btn-warning" href="{% url 'main:product_update' object.pk %}" role="button">Изменить</a>
+                    <a class="btn btn-danger" href="{% url 'main:product_delete' object.pk %}" role="button">Удалить</a>
+                {% endif %}
             </div>
 
           </div>
