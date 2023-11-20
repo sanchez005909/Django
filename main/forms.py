@@ -12,7 +12,7 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ('datetime_create',)
+        exclude = ('datetime_create', 'is_published')
 
     def clean_title(self):
         cleaned_data = self.cleaned_data.get('title')

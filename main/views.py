@@ -1,6 +1,9 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.forms import inlineformset_factory
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from main.forms import ProductForm, VersionForm, CategoryForm
 from main.models import Product, Category, Version
@@ -12,21 +15,21 @@ class CategoryListView(ListView):
     template_name = 'main/category_list.html'
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Category
     form_class = CategoryForm
     template_name = 'main/category_form.html'
     success_url = reverse_lazy('main:category_list')
 
 
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Category
     form_class = CategoryForm
     template_name = 'main/category_form.html'
     success_url = reverse_lazy('main:category_list')
 
 
-class CategoryDeleteView(DeleteView):
+class CategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Category
     template_name = 'main/category_delete.html'
     success_url = reverse_lazy('main:category_list')
@@ -37,7 +40,7 @@ class ProductListView(ListView):
     template_name = 'main/index.html'
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'main/product_form.html'
@@ -55,11 +58,20 @@ class ProductCreateView(CreateView):
             return redirect(reverse_lazy('users:login'))
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'main.update_product'
     template_name = 'main/product_form.html'
     success_url = '/'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.request.user.is_staff:
+            return self.object
+        if self.object.user_prod != self.request.user:
+            raise Http404
+        return self.object
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -80,8 +92,10 @@ class ProductUpdateView(UpdateView):
 
         return super().form_valid(form)
 
+    def test_func(self):
+        return self.request.user.is_active
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = 'main/product_delete.html'
     success_url = '/'
@@ -96,3 +110,13 @@ def contact(request):
     return render(request, 'main/contact.html')
 
 
+def toggle_published(request, pk):
+    product_item = get_object_or_404(Product, pk=pk)
+    if product_item.is_published:
+        product_item.is_published = False
+    else:
+        product_item.is_published = True
+
+    product_item.save()
+
+    return redirect(reverse('main:main'))

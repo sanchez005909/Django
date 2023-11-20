@@ -3,7 +3,8 @@ from django.urls import path
 from django.conf import settings
 from main.apps import MainConfig
 from main.views import (contact, CategoryListView, CategoryCreateView, CategoryUpdateView, CategoryDeleteView,
-                        ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView)
+                        ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView, ProductDeleteView,
+                        toggle_published)
 
 app_name = MainConfig.name
 
@@ -18,6 +19,7 @@ urlpatterns = [
     path('product_create', ProductCreateView.as_view(), name='product_create'),
     path('product_update/<int:pk>/', ProductUpdateView.as_view(), name='product_update'),
     path('product_delete/<int:pk>/', ProductDeleteView.as_view(), name='product_delete'),
+    path('published_product/<int:pk>/', toggle_published, name='is_published')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

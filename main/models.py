@@ -33,6 +33,7 @@ class Product(models.Model):
                                             blank=True)
     user_prod = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
                               verbose_name='Пользователь')
+    is_published = models.BooleanField(default=False, verbose_name='Публикация')
 
     def __str__(self):
         # Строковое отображение объекта
