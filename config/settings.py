@@ -148,3 +148,12 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = 'tolstikov-1996@yandex.com'
 EMAIL_HOST_PASSWORD = 'ngdkfadgmwunaaqi'
 EMAIL_USE_SSL = True
+
+CACHED_ENABLED = os.getenv('CACHED_ENABLED') == 'True'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
